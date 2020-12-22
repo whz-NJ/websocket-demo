@@ -1,0 +1,6 @@
+server:
+  port: 8200
+  tomcat:
+    # NIO默认10000
+    # max-connections: 10000
+    max-threads: 5000
