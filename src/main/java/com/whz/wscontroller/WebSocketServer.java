@@ -78,6 +78,7 @@ public class WebSocketServer {
         for (WebSocketServer item : webSocketSet) {
             try {
                 item.sendMessage(message);
+                item.session.close();
             }
             catch (IOException e) {
                 e.printStackTrace();
