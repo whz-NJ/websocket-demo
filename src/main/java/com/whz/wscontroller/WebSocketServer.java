@@ -1,6 +1,7 @@
 package com.whz.wscontroller;
 
 import com.whz.configuration.ServerConfigurator;
+import com.whz.endecode.MessageDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Date 2020/1/2 17:00
  * @Version V1.0
  **/
-@ServerEndpoint(value = "/imserver/{sid}", configurator = ServerConfigurator.class)
+@ServerEndpoint(value = "/imserver/{sid}", configurator = ServerConfigurator.class,
+    decoders = { MessageDecoder.class })
 @Component
 @Slf4j
 public class WebSocketServer {
