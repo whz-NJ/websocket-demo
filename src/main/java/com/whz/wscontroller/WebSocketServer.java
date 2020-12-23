@@ -22,7 +22,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  **/
 @ServerEndpoint(value = "/imserver/{sid}", configurator = ServerConfigurator.class,
     decoders = { MessageDecoder.class })
-@Component
+@Component // 虽然用 Component 注解修饰，但每个webSocket连接会生成不同的 WebSocketServer 实例，
+           // 必须使用 @Component 注解修饰，否则 test.html 连接时将返回 404 错误
 @Slf4j
 public class WebSocketServer {
 
