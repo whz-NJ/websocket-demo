@@ -79,12 +79,16 @@ public class SingletonMap<K, T1, T2, V> {
         return null;
     }
 
-    public void remove(K key) {
+    public V remove(K key) {
         Item<V> item = map.get(key);
         if(null != item) {
             synchronized (item.lock) {
+                V value = item.value;
+                item.value = null; //let get() to get latest value
                 map.remove(key);
+                return value;
             }
         }
+        return null;
     }
 }
