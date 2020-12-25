@@ -52,7 +52,7 @@ public class SingletonMap<K, T1, T2, V> {
         }
 
         synchronized (lock) {
-            if(null != oldItem) {
+            if(null != oldItem && oldItem.value != null) {
                 return oldItem.value;
             }
 
