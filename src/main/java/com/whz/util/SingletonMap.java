@@ -1,6 +1,6 @@
 package com.whz.util;
 
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -90,5 +90,53 @@ public class SingletonMap<K, T1, T2, V> {
             }
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        final int NUM_OF_THREADS = 80;
+        // final int NUM_OF_VALUES = 200;
+        SingletonMap<String, Integer, Integer, Integer> map = new SingletonMap<String, Integer, Integer, Integer>(
+            (param1, param2) -> {
+                Integer result = param1 + param2;
+                System.out.println("result = " + result);
+                return result;}
+        );
+//        for(int i = 0; i < NUM_OF_VALUES; i++) {
+//            String key = UUID.randomUUID().toString();
+//            map.getOrCreate(key, i, 0);
+//            keys.add(key);
+//        }
+//        for(String key: keys) {
+//            if( map.get(key) < 0) {
+//                System.err.println("value should >= 0");
+//            }
+//            map.remove(key);
+//        }
+//        for(String key: keys) {
+//            if( map.get(key) != null) {
+//                System.err.println("value should be null");
+//            }
+//        }
+        Thread[] threads = new Thread[NUM_OF_THREADS];
+        for(int i = 0; i< NUM_OF_THREADS/2; i++) {
+            final String key = UUID.randomUUID().toString();
+            final int j = i;
+            threads[2*i] = new Thread(new Runnable() {
+                @Override public void run() {
+                    map.getOrCreate(key, j, 0);
+                    System.out.println("value insered: " + (j));
+                }
+            });
+            threads[2*i+1] = new Thread(new Runnable() {
+                @Override public void run() {
+                    map.getOrCreate(key, j, 0);
+                    System.out.println("value insered: " + (j));
+                }
+            });
+            threads[2*i].start();
+            threads[2*i+1].start();
+        }
+
+        System.out.println("bye");
     }
 }
